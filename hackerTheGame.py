@@ -6,6 +6,9 @@
 ## I'm going to make this game for fun
 ## and of course learn with it
 
+## Dependences
+##### mpv  -  https://github.com/mpv-player/mpv 
+
 ## import modules
 import json
 
@@ -140,7 +143,7 @@ def login():
 def missions(mission):
     if mission == "1":
         print(color.bold.light_blue + "  Misson 1: Invade the server local")
-        print(color.bold.purple + "    invade the server local and exit \n")
+        print(color.bold.purple + "     invade the server local and exit \n")
         
         print(color.red + " type this 127.0.0.1\n" + color.reset)
         
@@ -190,9 +193,46 @@ def missions(mission):
             print(color.reset)
 
             print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
+            
+            with open(dirname + "/info.json", "r") as infoFile:
+                info = json.load(infoFile)
+
+            info["money"]["bit_coins"] += 100
+
+            with open(dirname + "/info.json", "w") as infoFile:
+                json.dump(info, infoFile)
 
         else:
             print(anwser, color.bold.red + "is not a valid IP" + color.reset)
+
+    elif mission == "2":
+        print(color.bold.light_blue + "  Mission 2: Descrypt morse code")
+        print(color.bold.purple + "     you'll hear a morse code, try descrypt it \n")
+
+        print(color.bold.green + "Playing...")
+        sleep(1)
+        system("mpv '" + dirname + "/sound/morse.wav' &> /dev/null")
+        sleep(1)
+
+        print(color.bold.red + "\n what the morse code say?" + color.reset)
+        anwser = input("> ")
+
+        ## just see it if you are a noob :P
+        if anwser == "best game":
+            print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
+
+            with open(dirname + "/info.json", "r") as infoFile:
+                info = json.load(infoFile)
+
+            info["money"]["bit_coins"] += 100
+
+            with open(dirname + "/info.json", "w") as infoFile:
+                json.dump(info, infoFile)
+
+        else:
+            print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
+            sleep(1)
+            missions("2")
 
 def playMenu():
     print(color.bold.green + " [0] " + color.bold.white + "-" + color.bold.yellow + " Quit ")
@@ -211,7 +251,16 @@ def playMenu():
     elif anwser == "3":
         print("nothing")
     elif anwser == "4":
-        missions("1")
+        print(color.bold.green + "<1>" + color.bold.white + " -- " + color.bold.light_blue + " Scan Localhost ")
+        print(color.bold.green + "<2>" + color.bold.white + " -- " + color.bold.light_blue + " Descrypt Morse Code \n" + color.reset)
+
+        mission = input("Choose the mission: ")
+
+        missions(mission)
+    else:
+        print("error: no option: ", anwser)
+        sleep(1)
+        menu("1")
 
 ## The Game
 def main():
