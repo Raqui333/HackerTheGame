@@ -10,7 +10,7 @@
 import json
 
 from time import sleep
-from os import system
+from os import system, path
 
 ## Create Json File
 data = {
@@ -33,10 +33,14 @@ data = {
             }
        }
 
+
+absolutePath = path.abspath(__file__)
+dirname = path.dirname(absolutePath)
+
 try:
-    open("info.json", "r")
+    open(dirname + "/info.json", "r")
 except FileNotFoundError:
-    with open("info.json", "w") as infoFile:
+    with open(dirname + "/info.json", "w") as infoFile:
         json.dump(data, infoFile)
 
 ## Colors
@@ -110,7 +114,7 @@ def aboutMenu(option):
     return anwser
 
 def login():
-    with open("info.json", "r") as infoFile:
+    with open(dirname + "/info.json", "r") as infoFile:
         info = json.load(infoFile)
 
     if info["user"]["name"] == "admin" and info["user"]["password"] == "12345":
@@ -122,11 +126,10 @@ def login():
         info["user"]["name"] = name
         info["user"]["password"] = password
 
-        with open("info.json", "w") as infoFile:
+        with open(dirname + "/info.json", "w") as infoFile:
             json.dump(info, infoFile)
 
-        print()
-        login()
+        quit()
     else:
         loginName = input("name: ")
         loginPassword = input("password: ")
@@ -139,12 +142,14 @@ def missions(mission):
         print(color.bold.light_blue + "  Misson 1: Invade the server local")
         print(color.bold.purple + "    invade the server local and exit \n")
         
-        print(color.red + " type this 127.0.0.1" + color.reset)
+        print(color.red + " type this 127.0.0.1\n" + color.reset)
+        
+        print(color.bold.red + "root@linux" + color.bold.white + ": /" + color.reset + " # ", end="")
         anwser = input("nmap -A -T4 ")
 
         if anwser == "127.0.0.1":
             print(color.bold.green)
-            print(" Starting Nmap Scan on ' 127.0.0.1 '...")
+            print(" Starting Nmap Scan on '127.0.0.1' wait...")
             sleep(2)
             print(" Scan Ports...")
             sleep(0.1)
@@ -159,7 +164,7 @@ def missions(mission):
             
             for i in line1, line2, line3:
                 print(i)
-                sleep(0.05)
+                sleep(0.1)
 
             sleep(0.1)
 
@@ -177,11 +182,11 @@ def missions(mission):
             
             for i in line1, line2, line3, line4, line5, line6, line7, line8, line9, line10:
                 print(i)
-                sleep(0.05)
+                sleep(0.1)
 
             sleep(1)
 
-            print("Nmap done: 1 IP address (1 host up), 2 ports open, 1 OS detected\n")
+            print("Nmap done: 1 IP address (1 host up), 2 ports open, 1 OS detected")
             print(color.reset)
 
             print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
@@ -241,7 +246,7 @@ def main():
         sleep(1)
         main()
     
-    with open("info.json", "r") as infoFile:
+    with open(dirname + "/info.json", "r") as infoFile:
         info = json.load(infoFile)
 
     name = info["user"]["name"]
