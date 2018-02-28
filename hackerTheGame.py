@@ -209,16 +209,32 @@ def missions(mission):
         print(color.bold.light_blue + "  Mission 2: Descrypt morse code")
         print(color.bold.purple + "     you'll hear a morse code, try descrypt it \n")
 
-        print(color.bold.green + "Playing...")
+        print(color.bold.green + "Playing... \n\n ", end="")
         sleep(1)
-        system("mpv '" + dirname + "/sound/morse.wav' &> /dev/null")
+        
+        ## Play audio in background
+        system("mpv '" + dirname + "/sound/morse.wav' &> /dev/null &")
+
+        ## Hide cursor 
+        system("setterm -cursor off")
+        
+        ## Visual progress bar for audio
+        for i in range(1,30):
+            print(color.bold.light_blue + "━", end="", flush=True)
+            sleep(0.14)
+
         sleep(1)
 
-        print(color.bold.red + "\n what the morse code say?" + color.reset)
+        print(color.reset + color.bold.red + "\n\n what the morse code say?" + color.reset)
+        
+        ## Back cursor
+        system("setterm -cursor on")
+        
         anwser = input("> ")
 
         ## just see it if you are a noob :P
         if anwser == "best game":
+            print()
             print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
 
             with open(dirname + "/info.json", "r") as infoFile:
@@ -230,6 +246,7 @@ def missions(mission):
                 json.dump(info, infoFile)
 
         else:
+            print()
             print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
             sleep(1)
             missions("2")
