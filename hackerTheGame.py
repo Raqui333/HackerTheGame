@@ -141,6 +141,21 @@ def login():
         if loginName == info["user"]["name"] and loginPassword == info["user"]["password"]:
             return True
 
+def ifWinOrNot(result):
+    ## values, <win> or <lose>
+    if result == "win":
+        print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
+
+        with open(dirname + "/info.json", "r") as infoFile:
+            info = json.load(infoFile)
+
+        info["money"]["bit_coins"] += 100
+
+        with open(dirname + "/info.json", "w") as infoFile:
+            json.dump(info, infoFile)
+    else:
+        print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
+
 def missions(mission):
     if mission == "1":
         print(color.bold.light_blue + "  Misson 1: Invade the server local")
@@ -193,15 +208,7 @@ def missions(mission):
             print("Nmap done: 1 IP address (1 host up), 2 ports open, 1 OS detected")
             print(color.reset)
 
-            print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
-            
-            with open(dirname + "/info.json", "r") as infoFile:
-                info = json.load(infoFile)
-
-            info["money"]["bit_coins"] += 100
-
-            with open(dirname + "/info.json", "w") as infoFile:
-                json.dump(info, infoFile)
+            ifWinOrNot("win")
 
         else:
             print(anwser, color.bold.red + "is not a valid IP" + color.reset)
@@ -236,21 +243,13 @@ def missions(mission):
         ## just see it if you are a noob :P
         if anwser == "best game":
             print()
-            print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
-
-            with open(dirname + "/info.json", "r") as infoFile:
-                info = json.load(infoFile)
-
-            info["money"]["bit_coins"] += 100
-
-            with open(dirname + "/info.json", "w") as infoFile:
-                json.dump(info, infoFile)
-
+            ifWinOrNot("win")
         else:
             print()
-            print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
+            ifWinOrNot("lose")
             sleep(1)
             missions("2")
+
     elif mission == "3":
         print(color.bold.light_blue + "  Mission 3: Find two numbers in image")
         print(color.bold.purple + "    get two numbers from image that will open")
@@ -259,6 +258,7 @@ def missions(mission):
         print(color.bold.green + "This is the image...")
         sleep(1)
 
+        ## spaw feh with image
         system("feh '" + dirname + "/images/image1.png' &> /dev/null &")
         sleep(1)
 
@@ -269,19 +269,11 @@ def missions(mission):
         ## don't see it, bitch
         if anwser == "800, 600":
             print()
-            print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
-
-            with open(dirname + "/info.json", "r") as infoFile:
-                info = json.load(infoFile)
-
-            info["money"]["bit_coins"] += 100
-
-            with open(dirname + "/info.json", "w") as infoFile:
-                json.dump(info, infoFile)
+            ifWinOrNot("win")
 
         else:
             print()
-            print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
+            ifWinOrNot("lose")
             sleep(1)
             missions("3")
 
