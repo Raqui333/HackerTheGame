@@ -8,6 +8,7 @@
 
 ## Dependences
 ##### mpv  -  https://github.com/mpv-player/mpv 
+##### feh  -  https://github.com/derf/feh
 
 ## import modules
 import json
@@ -250,6 +251,39 @@ def missions(mission):
             print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
             sleep(1)
             missions("2")
+    elif mission == "3":
+        print(color.bold.light_blue + "  Mission 3: Find two numbers in image")
+        print(color.bold.purple + "    get two numbers from image that will open")
+        print(color.bold.purple + "    if you are in a TWM, change desktop layout to float \n")
+
+        print(color.bold.green + "This is the image...")
+        sleep(1)
+
+        system("feh '" + dirname + "/images/image1.png' &> /dev/null &")
+        sleep(1)
+
+        print(color.bold.yellow + "\n What are they?")
+        print(" type like this, '<number>, <number>'" + color.reset)
+        anwser = input("> ")
+
+        ## don't see it, bitch
+        if anwser == "800, 600":
+            print()
+            print(color.bold.green + feature.background + feature.alert + " " * 20, "Congratulations" + " " * 20, "\n" + color.reset)
+
+            with open(dirname + "/info.json", "r") as infoFile:
+                info = json.load(infoFile)
+
+            info["money"]["bit_coins"] += 100
+
+            with open(dirname + "/info.json", "w") as infoFile:
+                json.dump(info, infoFile)
+
+        else:
+            print()
+            print(color.bold.red + feature.background + feature.alert + " " * 20, "NOOB, try again" + " " * 20, "\n" + color.reset)
+            sleep(1)
+            missions("3")
 
 def playMenu():
     print(color.bold.green + " [0] " + color.bold.white + "-" + color.bold.yellow + " Quit ")
@@ -269,7 +303,8 @@ def playMenu():
         print("nothing")
     elif anwser == "4":
         print(color.bold.green + "<1>" + color.bold.white + " -- " + color.bold.light_blue + " Scan Localhost ")
-        print(color.bold.green + "<2>" + color.bold.white + " -- " + color.bold.light_blue + " Descrypt Morse Code \n" + color.reset)
+        print(color.bold.green + "<2>" + color.bold.white + " -- " + color.bold.light_blue + " Descrypt Morse Code")
+        print(color.bold.green + "<3>" + color.bold.white + " -- " + color.bold.light_blue + " Find two numbers \n" + color.reset)
 
         mission = input("Choose the mission: ")
 
